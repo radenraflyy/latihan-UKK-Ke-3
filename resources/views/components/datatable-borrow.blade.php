@@ -20,31 +20,25 @@
                     <h5 class="card-title">
                         Table Borrowed
                     </h5>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                        Create
-                    </button>
                 </div>
-                @include('components.modal.borrow')
                 <div class="card-body">
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>No Borrow</th>
-                                <th>ID Member</th>
                                 <th>Name</th>
+                                <th>Book</th>
                                 <th>Borrow Date</th>
                                 <th>Return Date</th>
                                 <th>Status</th>
-                                <th>Forefeit(Denda)</th>
-                                <th>Action</th>
+                                @if (Auth::guest())
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>WK-001</td>
-                                <td>WK-12108686</td>
                                 <td>Raden Rafly Pradana Kusumah</td>
                                 <td>17-03-2024</td>
                                 <td>20-03-2024</td>
@@ -52,19 +46,20 @@
                                 <td>Rp. 0</td>
                                 <td>
                                     <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </button>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
+                                        <form action="" method="post">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <button @disabled(true) class="btn btn-primary"
+                                                data-toggle="tooltip" data-placement="top" title="Returned">
+                                                <i class="bi bi-box-arrow-up-right"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>WK-002</td>
-                                <td>WK-12108534</td>
                                 <td>ORIDENT</td>
                                 <td>12-03-2024</td>
                                 <td>17-03-2024</td>
@@ -72,12 +67,15 @@
                                 <td>Rp. 10.000</td>
                                 <td>
                                     <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </button>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
+                                        <form action="" method="post">
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <button @disabled(false) class="btn btn-primary"
+                                                data-toggle="tooltip" data-placement="top" title="Returned">
+                                                <i class="bi bi-box-arrow-up-right"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

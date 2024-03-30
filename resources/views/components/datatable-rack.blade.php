@@ -40,9 +40,10 @@
                                 <td>Rak Buku IT</td>
                                 <td>
                                     <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success">
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#update">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
+                                        @include('components.modal-update.rack')
                                         <button class="btn btn-danger">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>

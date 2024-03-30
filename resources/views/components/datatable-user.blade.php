@@ -20,9 +20,24 @@
                     <h5 class="card-title">
                         Table User Data
                     </h5>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm">
-                        Add User
-                    </button>
+                    <div class="d-flex gap-2">
+                        <form method="GET" action="">
+                            @csrf
+                            <button type="submit" class="btn btn-success">
+                                Export
+                            </button>
+                        </form>
+                        <form method="GET" action="">
+                            @csrf
+                            <button type="submit" class="btn btn-light-dark">
+                                Print
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#inlineForm">
+                            Add User
+                        </button>
+                    </div>
                 </div>
                 @include('components.modal.user')
                 <div class="card-body">
@@ -48,11 +63,15 @@
                                 <td>Admin</td>
                                 <td>
                                     <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success">
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#update"
+                                            class="btn btn-success">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
+                                        @include('components.modal-update.user')
+                                        <button type="submit" class="btn btn-danger">
+                                            <a class="text-white" href="">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
                                         </button>
                                     </div>
                                 </td>
@@ -66,11 +85,15 @@
                                 <td>Staff</td>
                                 <td>
                                     <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success">
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#update"
+                                            class="btn btn-success">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
+                                        @include('components.modal-update.user')
+                                        <button type="submit" class="btn btn-danger">
+                                            <a class="text-white" href="">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
                                         </button>
                                     </div>
                                 </td>
@@ -84,11 +107,15 @@
                                 <td>User</td>
                                 <td>
                                     <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success">
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#update"
+                                            class="btn btn-success">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
+                                        @include('components.modal-update.user')
+                                        <button type="submit" class="btn btn-danger">
+                                            <a class="text-white" href="">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
                                         </button>
                                     </div>
                                 </td>
