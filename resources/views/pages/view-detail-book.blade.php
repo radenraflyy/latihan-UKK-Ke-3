@@ -2,6 +2,20 @@
 
 @section('title', 'My Collection')
 @section('content')
+    <style>
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        label {
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked+label {
+            color: yellow;
+        }
+    </style>
     <div class="mb-5 p-3">
         <div class="border-3 border-bottom mb-3">
             <h2>View Detail</h2>
@@ -24,6 +38,37 @@
                     <button class="btn btn-outline-success">Borrow</button>
                 </div>
             </div>
+            {{-- @if ($detail_book->borroweds->where('status', 'borrowed')->where('user_id', Auth::user()->id)->count() === 1) --}}
+            <div class="card p-3 w-100 m-0">
+                <form action="" method="post">
+                    @csrf
+                    <div>
+                        <h4>Comment</h4>
+                    </div>
+                    <textarea name="review" class="form-control" style="width: 100%; height: 100px;"></textarea>
+                    <div class="mt-3">
+                        <h5>Rating</h5>
+                    </div>
+                    <div class="d-flex items-center gap-2">
+                        <input id="star1" name="rating" value="1" type="checkbox">
+                        <label for="star1"><i class="bi bi-star-fill"></i></label>
+
+                        <input id="star2" name="rating" value="2" type="checkbox">
+                        <label for="star2"><i class="bi bi-star-fill"></i></label>
+
+                        <input id="star3" name="rating" value="3" type="checkbox">
+                        <label for="star3"><i class="bi bi-star-fill"></i></label>
+
+                        <input id="star4" name="rating" value="4" type="checkbox">
+                        <label for="star4"><i class="bi bi-star-fill"></i></label>
+
+                        <input id="star5" name="rating" value="5" type="checkbox">
+                        <label for="star5"><i class="bi bi-star-fill"></i></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-2">Send</button>
+                </form>
+            </div>
+            {{-- @endif --}}
             <div class="card p-3 overflow-auto shadow-sm">
                 <div class="mb-4">
                     <h2>Review</h2>
