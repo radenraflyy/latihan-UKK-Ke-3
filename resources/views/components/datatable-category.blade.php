@@ -35,35 +35,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Fiksi</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#update">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        @include('components.modal-update.category')
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Drama</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#update">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>
+                                        <div class="d-flex items-center gap-3">
+                                            <button class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#update{{ $item->id }}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            @include('components.modal-update.category', ['get' => $item])
+                                            <form data-confirm-delete="true"
+                                                action="{{ route('delete.category', $item->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit"
+                                                    class="btn btn-danger">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

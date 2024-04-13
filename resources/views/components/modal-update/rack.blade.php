@@ -1,4 +1,4 @@
-<div class="modal fade text-left" id="update" tabindex="-1" role="dialog"
+<div class="modal fade text-left" id="update{{ $get->id }}" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -8,13 +8,13 @@
                     <i data-feather="x"></i>
                 </button>
             </div>
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('update.rack', $get->id) }}">
                 @csrf
                 @method('PATCH')
                 <div class="modal-body">
                     <label for="email">Name Rack</label>
                     <div class="form-group">
-                        <input value="" name="rack" id="email" type="text"
+                        <input value="{{ $get->name }}" name="rack" id="email" type="text"
                             placeholder="Example: Rak Buku 1" class="form-control">
                     </div>
                 </div>

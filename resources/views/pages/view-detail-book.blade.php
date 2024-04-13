@@ -20,27 +20,46 @@
         <div class="border-3 border-bottom mb-3">
             <h2>View Detail</h2>
         </div>
-        <div class="d-flex flex-wrap gap-3">
-            <div class="border shadow-sm p-3">
+        <div class="d-flex flex-wrap gap-3 mb-4">
+            <div class="border shadow-sm p-3 w-100">
                 <div class="card-header">
-                    <img style="object-fit: cover; height: 300px; width: 100%;" src="./assets/compiled/jpg/banana.jpg"
+                    <img style="object-fit: cover; height: 300px; width: 100%;" src="{{ url('image/books/' . $data->image) }}"
                         alt="">
                 </div>
                 <div class="card-body mt-2">
-                    <h2>Tere Liye</h2>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, eos cumque veritatis laborum placeat
-                        delectus iste debitis dolorum porro tenetur eum ab praesentium assumenda, esse illum repudiandae.
-                        Architecto, fugit est!</p>
+                    <h2>{{ $data->title }}</h2>
+                    <h5>{{ $data->author }}</h5>
+                    <p>{{ $data->publisher . ' | ' . $data->publication }}</p>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-outline-primary">View</button>
-                    <button class="btn btn-outline-secondary">Add Collection</button>
-                    <button class="btn btn-outline-success">Borrow</button>
+                <div class="card-footer d-flex gap-2">
+                    @if ($data->collections->where('book_id', $data->id)->where('user_id', Auth::user()->id)->isEmpty())
+                        <form action="{{ route('add.collection', $data->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-secondary">Add Collection</button>
+                        </form>
+                    @endif
+                    @if ($data->borroweds->where('status', 'borrowed')->where('user_id', Auth::user()->id)->count() === 0)
+                        <form action="{{ route('borrow.book', $data->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-success">Borrow</button>
+                        </form>
+                    @endif
+                    @foreach ($data->borroweds as $item)
+                        @if ($item->id && $item->date_return === null)
+                            <form action="{{ route('return.book', $item->id) }}" method="post">
+                                @csrf
+                                @method('patch')
+                                <button type="submit" class="btn btn-outline-success">Return
+                                </button>
+                            </form>
+                        @endif
+                    @endforeach
                 </div>
             </div>
-            {{-- @if ($detail_book->borroweds->where('status', 'borrowed')->where('user_id', Auth::user()->id)->count() === 1) --}}
-            <div class="card p-3 w-100 m-0">
-                <form action="" method="post">
+        </div>
+        @if ($data->borroweds->where('status', 'borrowed')->where('user_id', Auth::user()->id)->count() === 1)
+            <div class="card p-3 w-100 mb-4">
+                <form action="{{ route('add.review', $data->id) }}" method="post">
                     @csrf
                     <div>
                         <h4>Comment</h4>
@@ -68,60 +87,33 @@
                     <button type="submit" class="btn btn-primary w-100 mt-2">Send</button>
                 </form>
             </div>
-            {{-- @endif --}}
-            <div class="card p-3 overflow-auto shadow-sm">
-                <div class="mb-4">
-                    <h2>Review</h2>
-                </div>
-                <div class="d-flex flex-column gap-3">
-                    <div class="body p-3 border w-full">
-                        <h5 class="m-0 border-2 border-bottom" style="color: black; font-weight: 600;">ORI</h5>
-                        <p class="m-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla eum unde
-                            repellendus
-                            repudiandae
-                            voluptatem non eos minus excepturi. Iusto tempore, ad eum in iure blanditiis minima omnis quos.
-                            Corporis, commodi.</p>
-                        <div class="d-flex items-center">
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                        </div>
-                    </div>
-                    <div class="body p-3 border w-full">
-                        <h5 class="m-0 border-2 border-bottom" style="color: black; font-weight: 600;">ORI</h5>
-                        <p class="m-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla eum unde
-                            repellendus
-                            repudiandae
-                            voluptatem non eos minus excepturi. Iusto tempore, ad eum in iure blanditiis minima omnis quos.
-                            Corporis, commodi.</p>
-                        <div class="d-flex items-center">
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                        </div>
-                    </div>
-                    <div class="body p-3 border w-full">
-                        <h5 class="m-0 border-2 border-bottom" style="color: black; font-weight: 600;">ORI</h5>
-                        <p class="m-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla eum unde
-                            repellendus
-                            repudiandae
-                            voluptatem non eos minus excepturi. Iusto tempore, ad eum in iure blanditiis minima omnis quos.
-                            Corporis, commodi.</p>
-                        <div class="d-flex items-center">
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                            <i class="bi bi-star-fill" style="color: yellow;"></i>
-                        </div>
-                    </div>
-                </div>
-
+        @endif
+        <div class="card p-3 overflow-auto shadow-sm">
+            <div class="mb-4">
+                <h2>Review</h2>
             </div>
+            <div class="d-flex flex-column gap-3">
+                @if ($list_review->count() > 0)
+                    @foreach ($list_review as $item)
+                        <div class="body p-3 border w-full">
+                            <h5 class="m-0 border-2 border-bottom" style="color: black; font-weight: 600;">
+                                {{ $item->user->username }}</h5>
+                            <p class="m-0 mt-3 text-xl">{{ $item->review }}</p>
+                            <div class="d-flex items-center">
+                                @for ($i = 0; $i < $item->rating; $i++)
+                                    <i class="bi bi-star-fill"
+                                        style="color: yellow; font-size: 25px; margin-right: 15px; margin-top: 0px; margin-bottom: 10px;"></i>
+                                @endfor
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="font-bold text-center">Not Yet Review For this book {{ $data->title }}</p>
+                @endif
+            </div>
+
         </div>
     </div>
+    </div>
+    @include('sweetalert::alert')
 @endsection

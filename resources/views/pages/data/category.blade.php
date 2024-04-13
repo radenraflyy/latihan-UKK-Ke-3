@@ -8,6 +8,7 @@
 
 @section('content')
     @include('components.datatable-category')
+    @include('sweetalert::alert')
 @endsection
 
 @section('script')

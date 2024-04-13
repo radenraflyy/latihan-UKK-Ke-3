@@ -37,48 +37,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Raden Rafly Pradana Kusumah</td>
-                                <td>17-03-2024</td>
-                                <td>20-03-2024</td>
-                                <td>Returned</td>
-                                <td>Rp. 0</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <form action="" method="post">
-                                            @csrf
-                                            @method('PATCH')
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->user->fullname }}</td>
+                                    <td>{{ $item->book->title }}</td>
+                                    <td>{{ $item->date_borrow }}</td>
+                                    <td>{{ $item->date_return ? $item->date_return : '-' }}</td>
+                                    <td>{{ $item->status }}</td>
+                                    <td>
+                                        <div class="d-flex items-center gap-3">
+                                            <form action="{{ route('return.book', $item->id) }}" method="post">
+                                                @csrf
+                                                @method('PATCH')
 
-                                            <button @disabled(true) class="btn btn-primary"
-                                                data-toggle="tooltip" data-placement="top" title="Returned">
-                                                <i class="bi bi-box-arrow-up-right"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>ORIDENT</td>
-                                <td>12-03-2024</td>
-                                <td>17-03-2024</td>
-                                <td>Borrowed</td>
-                                <td>Rp. 10.000</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <form action="" method="post">
-                                            @csrf
-                                            @method('PATCH')
-
-                                            <button @disabled(false) class="btn btn-primary"
-                                                data-toggle="tooltip" data-placement="top" title="Returned">
-                                                <i class="bi bi-box-arrow-up-right"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
+                                                <button @disabled($item->date_return !== null) class="btn btn-primary"
+                                                    data-toggle="tooltip" data-placement="top" title="Returned">
+                                                    <i class="bi bi-box-arrow-up-right"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

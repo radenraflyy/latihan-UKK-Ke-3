@@ -20,7 +20,7 @@
                     <h5 class="card-title">
                         Table Rack Book
                     </h5>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                         Add Rack
                     </button>
                 </div>
@@ -35,35 +35,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Rak Buku IT</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#update">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        @include('components.modal-update.rack')
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Rak Buku Fiksi</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button class="btn btn-success">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>
+                                        <div class="d-flex items-center gap-3">
+                                            <button data-bs-toggle="modal" data-bs-target="#update{{ $item->id }}"
+                                                class="btn btn-success">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            @include('components.modal-update.rack', ['get' => $item])
+                                            <form action="{{ route('delete.rack', $item->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

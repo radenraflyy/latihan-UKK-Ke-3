@@ -24,7 +24,8 @@
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical">
+                    <form method="POST" action="{{ route('do.login') }}" class="form form-vertical">
+                        @csrf
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-12">
@@ -32,7 +33,7 @@
                                         <label for="email-id-icon">Email</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" placeholder="Email"
-                                                id="email-id-icon">
+                                                name="email" id="email-id-icon">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-envelope"></i>
                                             </div>
@@ -44,7 +45,7 @@
                                         <label for="password-id-icon">Password</label>
                                         <div class="position-relative">
                                             <input type="password" class="form-control" placeholder="Password"
-                                                id="password-id-icon">
+                                                name="password" id="password-id-icon">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-lock"></i>
                                             </div>
@@ -65,6 +66,7 @@
         <div class="mt-4">
             @include('layout.footer.app')
         </div>
+        @include('sweetalert::alert')
     </div>
     <script src="assets/static/js/components/dark.js"></script>
     <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>

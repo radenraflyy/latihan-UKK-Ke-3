@@ -24,7 +24,8 @@
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical">
+                    <form action="{{ route('do.register') }}" method="POST" class="form form-vertical">
+                        @csrf
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-12 mb-3">
@@ -33,7 +34,7 @@
                                         <label for="email-id-icon">Email</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" placeholder="Email"
-                                                id="email-id-icon">
+                                                name="email" id="email-id-icon">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-envelope"></i>
                                             </div>
@@ -45,7 +46,7 @@
                                         <label for="password-id-icon">Password</label>
                                         <div class="position-relative">
                                             <input type="password" class="form-control" placeholder="Password"
-                                                id="password-id-icon">
+                                                name="password" id="password-id-icon">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-lock"></i>
                                             </div>
@@ -56,7 +57,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="first-name-icon">Username</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control"
+                                            <input type="text" name="username" class="form-control"
                                                 placeholder="Input with icon left" id="first-name-icon">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
@@ -68,7 +69,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="first-name-icon">FullName</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control" name="fullname"
                                                 placeholder="Input with icon left" id="first-name-icon">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
@@ -80,7 +81,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="first-name-icon">Adress</label>
                                         <div class="position-relative">
-                                            <textarea class="form-control" placeholder="Input with icon left" id="first-name-icon"></textarea>
+                                            <textarea name="address" class="form-control" placeholder="Input with icon left" id="first-name-icon"></textarea>
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
                                             </div>

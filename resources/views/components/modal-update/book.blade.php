@@ -1,5 +1,5 @@
-<div class="modal fade text-left" id="update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
-    aria-hidden="true">
+<div class="modal fade text-left" id="update{{ $get->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-xl modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,16 +14,16 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body">
-                                    <form method="POST" action="#" enctype="multipart/form-data" class="form"
-                                        data-parsley-validate>
+                                    <form method="POST" action="{{ route('update.book', $get->id) }}"
+                                        enctype="multipart/form-data" class="form" data-parsley-validate>
                                         @csrf
-                                        @method('PUT')
+                                        @method('PATCH')
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="first-name-column" class="form-label">Title</label>
                                                     <input type="text" id="first-name-column" class="form-control"
-                                                        placeholder="title" name="title" value=""
+                                                        placeholder="title" name="title" value="{{ $get->title }}"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>
@@ -31,14 +31,14 @@
                                                 <div class="form-group">
                                                     <label for="last-name-column" class="form-label">Author</label>
                                                     <input type="text" id="last-name-column" class="form-control"
-                                                        placeholder="Auhtor" name="author" value=""
+                                                        placeholder="Auhtor" name="author" value="{{ $get->author }}"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="city-column" class="form-label">Publisher</label>
-                                                    <input type="text" value="" id="city-column"
+                                                    <input type="text" value="{{ $get->publisher }}" id="city-column"
                                                         class="form-control" placeholder="Publisher" name="publisher" />
                                                 </div>
                                             </div>
@@ -46,9 +46,9 @@
                                                 <div class="form-group">
                                                     <label for="year_of_publication" class="form-label">Year of
                                                         Publication</label>
-                                                    <input type="date" id="year_of_publication" value=""
-                                                        class="form-control" name="year_of_publication"
-                                                        placeholder="Year Of Publication"
+                                                    <input type="date" id="year_of_publication"
+                                                        value="{{ $get->publication }}" class="form-control"
+                                                        name="publication" placeholder="Year Of Publication"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>
@@ -59,7 +59,8 @@
                                                         class="form-control" placeholder="Image"
                                                         data-parsley-required="false" />
                                                 </div>
-                                                <img width="100" height="120" src="" alt="">
+                                                <img width="100" height="120"
+                                                    src="{{ url('image/books/' . $get->image) }}" alt="">
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <label class="form-label" for="inputGroupSelect01">Category</label>
@@ -68,13 +69,15 @@
                                                         Category</label>
                                                     <select name="category_id" class="form-select"
                                                         id="inputGroupSelect01">
-                                                        <option hidden selected value="">
-                                                            sasa
+                                                        <option hidden selected value="{{ $get->category_id }}">
+                                                            {{ $get->category->name }}
                                                         </option>
 
-                                                        <option value="">
-                                                            rqack1
-                                                        </option>
+                                                        @foreach ($list_category as $list)
+                                                            <option value="{{ $list->id }}">
+                                                                {{ $list->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>

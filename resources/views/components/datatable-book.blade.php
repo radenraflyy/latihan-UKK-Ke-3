@@ -23,7 +23,7 @@
                     {{-- @error('image')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror --}}
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                         Create
                     </button>
                 </div>
@@ -43,42 +43,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td align="center">1</td>
-                                <td><img width="150" height="170" src="#"
-                                        alt="Book.."></td>
-                                <td>{{ "tere" }}</td>
-                                <td>{{ "test" }}</td>
-                                <td>
-                                    {{ "gramedia | 2070 " }}
-                                </td>
-                                <td>fisils</td>
-                                <td align="center">rack 121</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#update">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        @include('components.modal-update.book')
-                                        <form method="POST" action="#">
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="bi bi-trash3-fill"></i>
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td align="center">{{ $loop->iteration }}</td>
+                                    <td><img width="150" height="170"
+                                            src="{{ url('image/books/' . $item->image) }}" alt="Book.."></td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>{{ $item->author }}</td>
+                                    <td>
+                                        {{ $item->publisher . ' | ' . $item->publication }}
+                                    </td>
+                                    <td>{{ $item->category->name }}</td>
+                                    <td align="center">{{ $item->rack ? $item->rack->name : '-' }}</td>
+                                    <td>
+                                        <div class="d-flex items-center gap-3">
+                                            <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#update{{ $item->id }}">
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
-                                        </form>
-                                        <button type="submit" class="btn btn-dark" data-bs-toggle="modal"
-                                            data-bs-target="#rack">
-                                            Set Rack
-                                        </button>
-                                        @include('components.modal-update.set-rack')
-                                    </div>
+                                            @include('components.modal-update.book', ['get' => $item])
+                                            <form method="POST" action="{{ route('delete.book', $item->id) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </form>
+                                            @if ($item->rack_id === null)
+                                                <button type="submit" class="btn btn-dark" data-bs-toggle="modal"
+                                                    data-bs-target="#rack{{ $item->id }}">
+                                                    Set Rack
+                                                </button>
+                                                @include('components.modal-update.set-rack', [
+                                                    'get' => $item,
+                                                ])
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                </td>
-                </tr>
-                </tbody>
-                </table>
             </div>
-    </div>
 
-    </section>
+        </section>
     </div>

@@ -1,4 +1,4 @@
-<div class="modal fade text-left" id="update" tabindex="-1" role="dialog"
+<div class="modal fade text-left" id="update{{ $get->id }}" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel33" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -9,14 +9,14 @@
                 </button>
             </div>
 
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('update.category', $get->id) }}">
                 @csrf
-                @method('PUT')
+                @method('PATCH')
                 <div class="modal-body">
-                    <label for="email">Name Category</label>
+                    <label for="category">Name Category</label>
                     <div class="form-group">
-                        <input name="category" id="email" type="text" placeholder="Category"
-                            value="" class="form-control">
+                        <input name="name" id="category" type="text" placeholder="Category"
+                            value="{{ $get->name }}" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">

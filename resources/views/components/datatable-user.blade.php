@@ -21,7 +21,7 @@
                         Table User Data
                     </h5>
                     <div class="d-flex gap-2">
-                        <form method="GET" action="">
+                        <form method="POST" action="{{ route('export.users') }}">
                             @csrf
                             <button type="submit" class="btn btn-success">
                                 Export
@@ -54,72 +54,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>radenraflyy</td>
-                                <td>Raden Rafly Pradana Kusumah</td>
-                                <td>Cipayung Bogor</td>
-                                <td>radenchaik@gmail.com</td>
-                                <td>Admin</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#update"
-                                            class="btn btn-success">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        @include('components.modal-update.user')
-                                        <button type="submit" class="btn btn-danger">
-                                            <a class="text-white" href="">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>orident</td>
-                                <td>ORIDENT</td>
-                                <td>Cipayung Datar</td>
-                                <td>orident@gmail.com</td>
-                                <td>Staff</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#update"
-                                            class="btn btn-success">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        @include('components.modal-update.user')
-                                        <button type="submit" class="btn btn-danger">
-                                            <a class="text-white" href="">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Rest</td>
-                                <td>ORIDENRestdsa</td>
-                                <td>Bogor</td>
-                                <td>raflyrst@gmail.com</td>
-                                <td>User</td>
-                                <td>
-                                    <div class="d-flex items-center gap-3">
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#update"
-                                            class="btn btn-success">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        @include('components.modal-update.user')
-                                        <button type="submit" class="btn btn-danger">
-                                            <a class="text-white" href="">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->username }}</td>
+                                    <td>{{ $item->fullname }}</td>
+                                    <td>{{ $item->address }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->role->name }}</td>
+                                    <td>
+                                        <div class="d-flex items-center gap-3">
+                                            <button type="button" data-bs-toggle="modal"
+                                                data-bs-target="#update{{ $item->id }}" class="btn btn-success">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            @include('components.modal-update.user', ['get' => $item])
+                                            <form action="{{ route('delete.users', $item->id) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -14,13 +14,15 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body">
-                                    <form class="form" data-parsley-validate>
+                                    <form action="{{ route('do.register') }}" class="form" method="POST"
+                                        data-parsley-validate>
+                                        @csrf
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group mandatory">
                                                     <label for="first-name-column" class="form-label">Username</label>
                                                     <input type="text" id="first-name-column" class="form-control"
-                                                        placeholder="username" name="fname-column"
+                                                        placeholder="username" name="username"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>
@@ -28,7 +30,7 @@
                                                 <div class="form-group">
                                                     <label for="last-name-column" class="form-label">FullName</label>
                                                     <input type="text" id="last-name-column" class="form-control"
-                                                        placeholder="Full Name" name="lname-column"
+                                                        placeholder="Full Name" name="fullname"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>
@@ -36,8 +38,7 @@
                                                 <div class="form-group">
                                                     <label for="city-column" class="form-label">Address</label>
                                                     <input type="text" id="city-column" class="form-control"
-                                                        placeholder="Jl.Raya" name="city-column"
-                                                        data-parsley-restricted-city="Jakarta"
+                                                        placeholder="Jl.Raya" name="address"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>
@@ -46,8 +47,8 @@
                                                 <div class="input-group mb-3">
                                                     <label class="input-group-text" for="inputGroupSelect01">Select
                                                         Role</label>
-                                                    <select class="form-select" id="inputGroupSelect01">
-                                                        <option selected>Choose...</option>
+                                                    <select name="role_id" class="form-select" id="inputGroupSelect01">
+                                                        <option selected hidden>Choose...</option>
                                                         <option value="1">Admin</option>
                                                         <option value="2">Staff</option>
                                                         <option value="3">User</option>
@@ -58,7 +59,7 @@
                                                 <div class="form-group">
                                                     <label for="country-floating" class="form-label">Email</label>
                                                     <input type="text" id="country-floating" class="form-control"
-                                                        name="country-floating" placeholder="example@gmail.com"
+                                                        name="email" placeholder="example@gmail.com"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>
@@ -66,7 +67,7 @@
                                                 <div class="form-group">
                                                     <label for="country-floating" class="form-label">Password</label>
                                                     <input type="text" id="country-floating" class="form-control"
-                                                        name="country-floating" placeholder="***"
+                                                        name="password" placeholder="***"
                                                         data-parsley-required="true" />
                                                 </div>
                                             </div>

@@ -1,48 +1,79 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowedController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MyCollectionController;
+use App\Http\Controllers\RackController;
+use App\Http\Controllers\ReviewsController;
+use App\Http\Middleware\isGuest;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.dashboard');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('pages.dashboard');
+    });
+
+    // Route Book Start
+    Route::get('data-book', [BookController::class, 'index']);
+    Route::get('books-user', [BookController::class, 'searchBook']);
+    Route::post('data-book', [BookController::class, 'store'])->name('create.book');
+    Route::post('set-rack/{id}', [BookController::class, 'setRack'])->name('set-rack.book');
+    Route::patch('data-book/{id}', [BookController::class, 'update'])->name('update.book');
+    Route::delete('data-book/{id}', [BookController::class, 'destroy'])->name('delete.book');
+    // Route Category End
+
+    // Route Category Start
+    Route::get('data-category', [CategoryController::class, 'index']);
+    Route::post('data-category', [CategoryController::class, 'store'])->name('create.category');
+    Route::patch('data-category/{id}', [CategoryController::class, 'update'])->name('update.category');
+    Route::delete('data-category/{id}', [CategoryController::class, 'destroy'])->name('delete.category');
+    // Route Category End
+
+    // Route Rack Start
+    Route::get('data-rack-book', [RackController::class, 'index']);
+    Route::post('data-rack-book', [RackController::class, 'store'])->name('create.rack');
+    Route::patch('data-rack-book/{id}', [RackController::class, 'update'])->name('update.rack');
+    Route::delete('data-rack-book/{id}', [RackController::class, 'destroy'])->name('delete.rack');
+    // Route Rack End
+
+    // MyCollection Start
+    Route::get('my-collection', [MyCollectionController::class, 'index']);
+    Route::post('add-collection/{book_id}', [MyCollectionController::class, 'store'])->name('add.collection');
+    Route::delete('remove-collection/{id}', [MyCollectionController::class, 'destroy'])->name('remove.collection');
+    // MyCollection End
+
+
+    // Borrowed Start
+    Route::get('data-borrow', [BorrowedController::class, 'index']);
+    Route::post('borrow/{book_id}', [BorrowedController::class, 'store'])->name('borrow.book');
+    Route::patch('return/{id}', [BorrowedController::class, 'update'])->name('return.book');
+    // Borrowed End
+
+    // Review Start
+    Route::get('view-detail{id}', [ReviewsController::class, 'index']);
+    Route::post('view-detail{book_id}', [ReviewsController::class, 'store'])->name('add.review');
+    // Review End
+
+    // Auth Start
+    Route::get('logout', [AuthController::class, 'doLogout'])->name('logout.users');
+    Route::get('user-data', [AuthController::class, 'pageUserData']);
+    Route::patch('user-data/{id}', [AuthController::class, 'updateUser'])->name('update.users');
+    Route::delete('user-data/{id}', [AuthController::class, 'deleteUser'])->name('delete.users');
+    Route::post('export-users', [AuthController::class, 'export'])->name('export.users');
+    // Auth End
 });
 
-Route::get('data-book', function () {
-    return view('pages.data.book');
-});
-
-Route::get('data-category', function () {
-    return view('pages.data.category');
-});
-
-Route::get('data-rack-book', function () {
-    return view('pages.data.rack');
-});
-
-Route::get('data-borrow', function () {
-    return view('pages.borrow');
-});
-
-Route::get('user-data', function () {
-    return view('pages.user-data');
-});
-
-Route::get('my-collection', function () {
-    return view('pages.my-collection');
-});
-
-Route::get('books-user', function () {
-    return view('pages.books-user');
-});
-
-Route::get('view-detail', function () {
-    return view('pages.view-detail-book');
-});
-
-Route::get('auth/login', function () {
-    return view('pages.auth.login');
-});
 
 
-Route::get('auth/register', function () {
-    return view('pages.auth.register');
+Route::middleware(isGuest::class)->group(function () {
+    // Auth Start
+    Route::get('auth/login', [AuthController::class, 'index'])->name('login');
+    Route::post('auth/register', [AuthController::class, 'register'])->name('do.register');
+    Route::post('auth/login', [AuthController::class, 'login'])->name('do.login');
+    Route::get('auth/register', [AuthController::class, 'pageRegister']);
+    // Auth End
 });

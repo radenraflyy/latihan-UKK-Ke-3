@@ -8,11 +8,12 @@
                     <i data-feather="x"></i>
                 </button>
             </div>
-            <form action="#">
+            <form action="{{ route('create.category') }}" method="POST">
+                @csrf
                 <div class="modal-body">
                     <label for="email">Name Category</label>
                     <div class="form-group">
-                        <input id="email" type="text" placeholder="Category" class="form-control">
+                        <input id="category" name="name" type="text" placeholder="Category" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -20,7 +21,7 @@
                         <i class="bx bx-x d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Close</span>
                     </button>
-                    <button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                    <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Create Category</span>
                     </button>
