@@ -22,13 +22,9 @@
                         <a href="/view-detail" class="">12 Comments</a>
                     </div>
                 </div>
-                <div class=" d-flex gap-2 card-footer">
+                <div class=" d-flex gap-2 align-items-center card-footer">
                     <button class="btn btn-outline-primary"><a href="/view-detail{{ 'id' }}">View</a></button>
                     {{-- @if ($item->collections->where('book_id', $item->id)->where('user_id', Auth::user()->id)->isEmpty()) --}}
-                    <form action="" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-secondary">Add Collection</button>
-                    </form>
                     {{-- @endif --}}
                     {{-- @if ($item->borroweds->where('status', 'borrowed')->where('user_id', Auth::user()->id)->count() === 0) --}}
                     <form action="" method="post">
@@ -47,6 +43,10 @@
                     {{-- @endif
                     @endforeach --}}
                 </div>
+                <form action="" method="post" class="w-100 mt-2">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-secondary w-100">Add Collection</button>
+                </form>
             </div>
         </div>
     </div>

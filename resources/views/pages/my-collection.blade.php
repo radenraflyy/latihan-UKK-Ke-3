@@ -42,8 +42,11 @@
                     </form>
                     {{-- @endif
                     @endforeach --}}
-
                 </div>
+                <form action="" method="post" class="w-100 mt-2">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-secondary w-100">Remove to Collection</button>
+                </form>
             </div>
         </div>
     </div>
