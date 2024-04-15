@@ -31,7 +31,7 @@
                                 <th>Borrow Date</th>
                                 <th>Return Date</th>
                                 <th>Status</th>
-                                @if (Auth::guest())
+                                @if (Auth::user()->role->name === 'user')
                                     <th>Action</th>
                                 @endif
                             </tr>
@@ -45,19 +45,21 @@
                                     <td>{{ $item->date_borrow }}</td>
                                     <td>{{ $item->date_return ? $item->date_return : '-' }}</td>
                                     <td>{{ $item->status }}</td>
-                                    <td>
-                                        <div class="d-flex items-center gap-3">
-                                            <form action="{{ route('return.book', $item->id) }}" method="post">
-                                                @csrf
-                                                @method('PATCH')
+                                    @if (Auth::user()->role->name === 'user')
+                                        <td>
+                                            <div class="d-flex items-center gap-3">
+                                                <form action="{{ route('return.book', $item->id) }}" method="post">
+                                                    @csrf
+                                                    @method('PATCH')
 
-                                                <button @disabled($item->date_return !== null) class="btn btn-primary"
-                                                    data-toggle="tooltip" data-placement="top" title="Returned">
-                                                    <i class="bi bi-box-arrow-up-right"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                                    <button @disabled($item->date_return !== null) class="btn btn-primary"
+                                                        data-toggle="tooltip" data-placement="top" title="Returned">
+                                                        <i class="bi bi-box-arrow-up-right"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

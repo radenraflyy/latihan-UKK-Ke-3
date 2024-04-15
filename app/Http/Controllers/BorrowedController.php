@@ -14,9 +14,9 @@ class BorrowedController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
         $view_data = [
-            'data' => Borrowed::all()
+            'data' => Auth::user()->role->name !== 'user' ? Borrowed::all() : Borrowed::where('user_id', Auth::user()->id)->get()
         ];
         return view('pages.borrow', $view_data);
     }

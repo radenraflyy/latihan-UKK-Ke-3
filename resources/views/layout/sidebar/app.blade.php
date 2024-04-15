@@ -49,60 +49,66 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li
-                    class="sidebar-item has-sub {{ request()->is('data-book', 'data-category', 'data-rack-book') ? 'active' : '' }}">
-                    <a href="#" class="sidebar-link">
-                        <i class="bi bi-pencil-square"></i>
-                        <span>Data</span>
-                    </a>
+                @if (Auth::user()->role->name !== 'user')
+                    <li
+                        class="sidebar-item has-sub {{ request()->is('data-book', 'data-category', 'data-rack-book') ? 'active' : '' }}">
+                        <a href="#" class="sidebar-link">
+                            <i class="bi bi-pencil-square"></i>
+                            <span>Data</span>
+                        </a>
 
-                    <ul class="submenu">
-                        <li class="submenu-item {{ request()->is('data-book') ? 'active' : '' }}">
-                            <a href="/data-book">
-                                <i class="bi bi-book-half"></i>
-                                <span>Books</span>
-                            </a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('data-category') ? 'active' : '' }}">
-                            <a href="/data-category">
-                                <i class="bi bi-bookmarks-fill"></i>
-                                <span>Book Category</span>
-                            </a>
-                        </li>
-                        <li class="submenu-item {{ request()->is('data-rack-book') ? 'active' : '' }}">
-                            <a href="/data-rack-book">
-                                <i class="bi bi-calendar3-week"></i>
-                                <span>Rack</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-
+                        <ul class="submenu">
+                            <li class="submenu-item {{ request()->is('data-book') ? 'active' : '' }}">
+                                <a href="/data-book">
+                                    <i class="bi bi-book-half"></i>
+                                    <span>Books</span>
+                                </a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('data-category') ? 'active' : '' }}">
+                                <a href="/data-category">
+                                    <i class="bi bi-bookmarks-fill"></i>
+                                    <span>Book Category</span>
+                                </a>
+                            </li>
+                            <li class="submenu-item {{ request()->is('data-rack-book') ? 'active' : '' }}">
+                                <a href="/data-rack-book">
+                                    <i class="bi bi-calendar3-week"></i>
+                                    <span>Rack</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+                @if (Auth::user()->role->name === 'admin')
+                    <li class="sidebar-item {{ request()->is('user-data') ? 'active' : '' }}">
+                        <a href="user-data" class="sidebar-link">
+                            <i class="bi bi-person-fill-add"></i>
+                            <span>User Data</span>
+                        </a>
+                    </li>
+                @endif
+                @if (Auth::user()->role->name === 'user')
+                    <li class="sidebar-item {{ request()->is('books-user') ? 'active' : '' }}">
+                        <a href="/books-user" class="sidebar-link">
+                            <i class="bi bi-search"></i>
+                            <span>Search Book</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="sidebar-item {{ request()->is('data-borrow') ? 'active' : '' }}">
                     <a href="/data-borrow" class="sidebar-link">
                         <i class="bi bi-archive-fill"></i>
                         <span>Book Borrowed</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ request()->is('user-data') ? 'active' : '' }}">
-                    <a href="user-data" class="sidebar-link">
-                        <i class="bi bi-person-fill-add"></i>
-                        <span>User Data</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ request()->is('my-collection') ? 'active' : '' }}">
-                    <a href="/my-collection" class="sidebar-link">
-                        <i class="bi bi-collection-fill"></i>
-                        <span>My Collection</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ request()->is('books-user') ? 'active' : '' }}">
-                    <a href="/books-user" class="sidebar-link">
-                        <i class="bi bi-search"></i>
-                        <span>Search Book</span>
-                    </a>
-                </li>
+                @if (Auth::user()->role->name === 'user')
+                    <li class="sidebar-item {{ request()->is('my-collection') ? 'active' : '' }}">
+                        <a href="/my-collection" class="sidebar-link">
+                            <i class="bi bi-collection-fill"></i>
+                            <span>My Collection</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="sidebar-item">
                     <a href="{{ route('logout.users') }}" class="sidebar-link">
                         <i class="bi bi-box-arrow-left"></i>

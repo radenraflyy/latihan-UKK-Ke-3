@@ -16,6 +16,21 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function borroweds()
+    {
+        return Borrowed::where('status', 'borrowed')->count();
+    }
+
+    public function returned()
+    {
+        return Borrowed::where('status', 'returned')->count();
+    }
+
+    public function books()
+    {
+        return Book::count();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
